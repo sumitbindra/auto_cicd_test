@@ -1,0 +1,28 @@
+# .github/workflows/python-ci.yml
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      # 1️⃣ Check out your repo
+      - uses: actions/checkout@v4
+
+      # 2️⃣ Set up Python (choose a version)
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"   # TODO: pick e.g. 3.12
+
+      # 3️⃣ Install dependencies & run tests
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run tests
+        run: pytest -q               # quiet mode for cleaner logs
